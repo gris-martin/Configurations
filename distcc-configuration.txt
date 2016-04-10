@@ -16,3 +16,7 @@ STARTDISTCC="true"
 ALLOWEDNETS="192.168.1.0/24" // Or whatever the CIDR address of the network is
 LISTENER="0.0.0.0"
 NICE="10"
+
+// Start slave
+/etc/init.d/distccd start
+
