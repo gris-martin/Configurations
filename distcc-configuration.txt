@@ -1,0 +1,18 @@
+SLAVE:
+
+// Install distcc
+sudo apt-get install distcc
+
+// Find adresses
+// Look for IPv4 Settings:
+// Address: Computer's internal address
+// Prefix: CIDR prefix (i.e. if internal address is 192.168.1.x, then CIDR address for 192.168.1.0 - 192.168.1.255 is 192.168.1.0/24), where 24 is the prefix. Or something like that
+nm-tool
+
+// Configure slave
+sudo emacs -nw /etc/default/distcc
+// ->
+STARTDISTCC="true"
+ALLOWEDNETS="192.168.1.0/24" // Or whatever the CIDR address of the network is
+LISTENER="0.0.0.0"
+NICE="10"
