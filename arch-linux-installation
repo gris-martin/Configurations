@@ -1,0 +1,5 @@
+Create USB (2016-04-01)
+1. Download .iso image.
+2. GParted: Format USB as fat32, label ARCH_YYYYMM where YYYY and MM is the year and the month the downloaded iso was created  (from Arch Linux web page)
+3. Unetbootin: Diskimage ISO path/to/image.iso
+4. Remove syslinux.cfg from USB root directory
