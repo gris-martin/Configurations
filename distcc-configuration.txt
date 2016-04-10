@@ -19,4 +19,23 @@ NICE="10"
 
 // Start slave
 /etc/init.d/distccd start
+// and/or (haven't really gotten the hang of this part)
+distccd --daemon -a xxx.xx.xx.xx --log-file ~/distccd.log // Where the x:es is the IP address of the master
 
+
+MASTER:
+// Add address of slaves to configuration
+sudo emacs -nw /etc/distcc/hosts
+// ->
+localhost/x 192.168.1.Y/y // Where x and y are the number of cores, and Y is the internal IP of the slave. More can be added with spaces.
+
+// Start the compiling, z is the total number of cores to be used, distributed over all the slaves. Can look different depending on what kind of compilation software is used
+distcc make -jz
+CC="distcc gcc" CXX="distcc g++" cmake .
+
+
+TROUBLESHOOTING:
+// Kill running processes (if it complains about addresses being busy)
+// (dcc_listen_by_addr) ERROR: bind of 0.0.0.0:3632 failed: Address already in use 
+/etc/init.d/distccd stop
+killall distccd
