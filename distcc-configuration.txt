@@ -29,9 +29,21 @@ sudo emacs -nw /etc/distcc/hosts
 // ->
 localhost/x 192.168.1.Y/y // Where x and y are the number of cores, and Y is the internal IP of the slave. More can be added with spaces.
 
+// To make gcc, g++, etc. automatically call distcc, do:
+sudo mkdir /usr/lib/distcc/bin
+cd /usr/lib/distcc/bin
+sudo ln -s ../../../bin/distcc gcc
+sudo ln -s ../../../bin/distcc cc
+sudo ln -s ../../../bin/distcc g++
+sudo ln -s ../../../bin/distcc c++
+// And add the directory to the beginning of path:
+PATH=/usr/lib/distcc/bin:$PATH
+
+
 // Start the compiling, z is the total number of cores to be used, distributed over all the slaves. Can look different depending on what kind of compilation software is used
 distcc make -jz
 CC="distcc gcc" CXX="distcc g++" cmake .
+
 
 
 TROUBLESHOOTING:
