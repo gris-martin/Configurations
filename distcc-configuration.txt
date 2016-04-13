@@ -49,5 +49,5 @@ CC="distcc gcc" CXX="distcc g++" cmake .
 TROUBLESHOOTING:
 // Kill running processes (if it complains about addresses being busy)
 // (dcc_listen_by_addr) ERROR: bind of 0.0.0.0:3632 failed: Address already in use 
-/etc/init.d/distccd stop
-killall distccd
+/etc/init.d/distcc stop
+sudo killall distccd
