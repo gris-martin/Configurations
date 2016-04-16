@@ -7,6 +7,88 @@
 (package-initialize)
 
 
+(defun ensure-package-installed (&rest packages)
+;;  "Assure every package is installed, ask for installation if it’s not.
+;;
+;;Return a list of installed packages or nil for every skipped package."
+  (mapcar
+   (lambda (package)
+     ;; (package-installed-p 'evil)
+     (if (package-installed-p package)
+         nil
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package)
+         package)))
+   packages))
+
+;; make sure to have downloaded archive description.
+;; Or use package-archive-contents as suggested by Nicolas Dudebout
+(or (file-exists-p package-user-dir)
+    (package-refresh-contents))
+
+(ensure-package-installed 'auto-complete-c-headers 'auto-complete 'flymake-cursor 'flymake-google-cpplint 'flymake-easy 'google-c-style 'iedit 'popup 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
+
+;; activate installed packages
+(package-initialize)
+
+
+
+;; Autocompletion
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+;; Autocomplete C headers
+(defun my:ac-c-header-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-to-list 'achead:include-directories '"/home/martin/Developer/OpenSceneGraph/headers"))
+
+(add-hook 'c++-mode-hook 'my:ac-c-header-init)
+(add-hook 'c-mode-hook 'my:ac-c-header-init)
+
+
+;; Multi-line editing support (default key "C-;" does not work)
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
+
+
+;; Yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
+
+
+;; Flymake configuration
+;; Start flymake-google-cpplint-load when c++ starts
+(defun my:flymake-google-init ()
+  (require 'flymake-google-cpplint)
+  (custom-set-variables
+   '(flymake-google-cpplint-command "/usr/local/bin/cpplint"))
+  (flymake-google-cpplint-load))
+(add-hook 'c-mode-hook 'my:flymake-google-init)
+(add-hook 'c++-mode-hook 'my:flymake-google-init)
+
+
+;; Google-c-style
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+
+
+;; Turn on semantic
+(semantic-mode 1)
+;; ;; Add semantic as backend to auto complete
+(defun my:add-semantic-to-autocomplete()
+  (add-to- 'ac-sources 'ac-source-semantic))
+(add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+
+;; EDE projects
+;; (global-ede-mode 1)
+;; System header files
+;; (ede-cpp-root-project "visual interactive simulation" :file "~/Developer/57302VT16-Visuell-Interaktiv-Simulering/main.cpp"
+;; 		      :include-path '("/../include"))
+
 ;; (global-ede-mode 1)
 ;; (require 'semantic/sb)
 ;; (semantic-mode 1)
