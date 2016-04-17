@@ -26,7 +26,7 @@
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
-(ensure-package-installed 'auto-complete-c-headers 'auto-complete 'flymake-cursor 'flymake-google-cpplint 'flymake-easy 'google-c-style 'iedit 'popup 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
+(ensure-package-installed 'auto-complete 'auto-complete-c-headers 'flymake-cursor 'flymake-google-cpplint 'flymake-easy 'google-c-style 'iedit 'popup 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
 
 ;; activate installed packages
 (package-initialize)
@@ -75,12 +75,12 @@
 
 
 
-;; Turn on semantic
-(semantic-mode 1)
-;; ;; Add semantic as backend to auto complete
-(defun my:add-semantic-to-autocomplete()
-  (add-to- 'ac-sources 'ac-source-semantic))
-(add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+;; ;; Turn on semantic
+;; (semantic-mode 1)
+;; ;; ;; Add semantic as backend to auto complete
+;; (defun my:add-semantic-to-autocomplete()
+;;   (add-to-list 'ac-sources 'ac-source-semantic))
+;; (add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
 
 
 ;; EDE projects
@@ -121,3 +121,21 @@
     (file-name-nondirectory buffer-file-name)))
 (setq-default mode-line-buffer-identification
 	      '(:eval (testfun)))
+
+
+;; (require 'eassist)
+
+;; (eval-after-load "eassist"
+;;  '(progn
+;;    (setq eassist-header-switches '(("h" . ("cpp" "cc" "c" "m"))
+;;                 ("hpp" . ("cpp" "cc"))
+;;                 ("cpp" . ("h" "hpp"))
+;;                 ("c" . ("h"))
+;;                 ("m" . ("h"))
+;;                 ("C" . ("H"))
+;;                 ("H" . ("C" "CPP" "CC"))
+;;                 ("cc" . ("h" "hpp"))))))
+
+;; (defun my/c-mode-cedet-hook ()
+;;   (local-set-key "\C-ct" 'eassist-switch-h-cpp))
+;; (add-hook 'c-mode-common-hook 'my/c-mode-cedet-hook)
