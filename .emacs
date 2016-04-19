@@ -26,7 +26,7 @@
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
-(ensure-package-installed 'auto-complete 'auto-complete-c-headers 'flymake-cursor 'flymake-google-cpplint 'flymake-easy 'google-c-style 'iedit 'popup 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
+(ensure-package-installed 'auto-complete 'auto-complete-c-headers 'flymake-cursor 'flymake-google-cpplint 'flymake-easy 'google-c-style 'iedit 'popup 'yasnippet 'lua-mode) ;  --> (nil nil) if iedit and magit are already installed
 
 ;; activate installed packages
 (package-initialize)
@@ -96,14 +96,14 @@
 
 ;; Enable lua mode (must install lua-mode first)
 ;; This line is not necessary, if lua-mode.el is already on your load-path
-;; (add-to-list 'load-path "/path/to/directory/where/lua-mode-el/resides")
+(add-to-list 'load-path "/path/to/directory/where/lua-mode-el/resides")
 
-;; (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-;; (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-;; (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
-;; ;; setup files ending in “.agxLua” to open in lua-mode
-;; (add-to-list 'auto-mode-alist '("\\.agxLua\\'" . lua-mode))
+;; setup files ending in “.agxLua” to open in lua-mode
+(add-to-list 'auto-mode-alist '("\\.agxLua\\'" . lua-mode))
 
 
 ;; (add-to-list 'exec-path "/usr/local/bin")
